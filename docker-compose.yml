@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  # 1. API Core Backend (FastAPI)
+  backend:
+    build: .
+    container_name: customs_api_core
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - DATABASE_URL=postgresql://customs_user:customs_pass@postgres:5432/customs_db
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - postgres
+      - redis
+    restart: always
+
+  # 2. Base de Datos Relacional (PostgreSQL + PostGIS / UUID)
+  postgres:
+    image: postgres:16-alpine
+    container_name: customs_postgres
+    environment:
+      POSTGRES_USER: customs_user
+      POSTGRES_PASSWORD: customs_pass
+      POSTGRES_DB: customs_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    restart: always
+
+  # 3. Cache en Memoria para Tarifas ADIL y Sesiones (Redis)
+  redis:
+    image: redis:7-alpine
+    container_name: customs_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: always
+
+volumes:
+  postgres_data:
+  redis_data:

@@ -1,0 +1,6 @@
+{
+  "name": "Customs Transit Simulator",
+  "description": "Professional Moroccan & International Customs Clearance Simulation Platform with ADII/ADIL HS-10 classifier, PortNet control tower, multi-language RTL support, real-to-mission AI document audit, and voice assistant.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
