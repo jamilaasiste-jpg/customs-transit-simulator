@@ -7,3 +7,6 @@ import { Header } from "./components/Header";
 import { PRESET_CUSTOMS_MISSIONS } from "./src/data/presetMissions";
 import { translations } from "./src/i18n/translations";
 import { Header } from "./src/components/Header";
+export default function App() {
+  // ...
+}
